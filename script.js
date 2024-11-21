@@ -1,3 +1,5 @@
+const articleArea = document.querySelector(".articleArea");
+
 let url =
   "https://newsapi.org/v2/top-headlines?" +
   "country=us&" +
@@ -25,10 +27,29 @@ fetch(url)
       newBtn.classList.add("läsMerKnapp");
 
       newBtn.addEventListener("click", () => {
-        console.log("hej");
+        articleArea.innerHTML = "";
+
+        const newTitle = document.createElement("h2");
+        newTitle.textContent = element.title;
+
+        const newImg = document.createElement("img");
+        newImg.src = element.urlToImage;
+
+        const newArticle = document.createElement("p");
+        newArticle.textContent = element.content;
+
+        const backBtn = document.createElement("button");
+        backBtn.textContent = "Gå tillbaka";
+        backBtn.classList.add("backButton");
+
+        backBtn.addEventListener("click", () => {
+          console.log("tillbakaknapp");
+        });
+
+        articleArea.append(newTitle, newImg, newArticle, backBtn);
       });
 
-      document.body.append(newTitle, newImg, newDesc, newBtn);
+      articleArea.append(newTitle, newImg, newDesc, newBtn);
     });
   })
   .catch((error) => console.error(error));
