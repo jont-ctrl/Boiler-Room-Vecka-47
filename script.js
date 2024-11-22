@@ -1,24 +1,55 @@
-const articleArea = document.querySelector(".articleArea");
-let articles = []; // Global variabel för att lagra hämtade artiklar
+const articleArea = document.querySelector('.articleArea');
+const searchInput = document.querySelector('#searchArticlesInput');
+let articles = [];
 
-function renderHome() {
-  articleArea.innerHTML = "";
+searchInput.addEventListener('keyup', () => {
+  console.log('Searching for:', searchInput.value);
+  searchArticles(searchInput.value);
+});
 
-  articles.forEach((element) => {
-    const newTitle = document.createElement("h2");
+function searchArticles(query) {
+  if (query.trim() === '') {
+    renderHome();
+  } else {
+    const filteredArticles = articles.filter((article) => {
+      const searchText = query.toLowerCase();
+      const title = article.title ? article.title.toLowerCase() : '';
+      const description = article.description
+        ? article.description.toLowerCase()
+        : '';
+
+      return title.includes(searchText) || description.includes(searchText);
+    });
+
+    console.log('Filtered Articles:', filteredArticles);
+
+    if (filteredArticles.length > 0) {
+      renderArticles(filteredArticles);
+    } else {
+      articleArea.innerHTML = '<h3>Inga artiklar hittades</h3>';
+    }
+  }
+}
+
+function renderArticles(articlesToRender) {
+  console.log('Rendering articles:', articlesToRender);
+  articleArea.innerHTML = '';
+
+  articlesToRender.forEach((element) => {
+    const newTitle = document.createElement('h2');
     newTitle.textContent = element.title;
 
-    const newImg = document.createElement("img");
+    const newImg = document.createElement('img');
     newImg.src = element.urlToImage;
 
-    const newDesc = document.createElement("h3");
+    const newDesc = document.createElement('h3');
     newDesc.textContent = element.description;
 
-    const newBtn = document.createElement("button");
-    newBtn.textContent = "Läs mer";
-    newBtn.classList.add("läsMerKnapp");
+    const newBtn = document.createElement('button');
+    newBtn.textContent = 'Läs mer';
+    newBtn.classList.add('läsMerKnapp');
 
-    newBtn.addEventListener("click", () => {
+    newBtn.addEventListener('click', () => {
       renderArticleDetail(element);
     });
 
@@ -27,31 +58,31 @@ function renderHome() {
 }
 
 function renderArticleDetail(article) {
-  articleArea.innerHTML = "";
+  articleArea.innerHTML = '';
 
-  const newTitle = document.createElement("h2");
+  const newTitle = document.createElement('h2');
   newTitle.textContent = article.title;
 
-  const newImg = document.createElement("img");
+  const newImg = document.createElement('img');
   newImg.src = article.urlToImage;
 
-  const newArticle = document.createElement("p");
+  const newArticle = document.createElement('p');
   newArticle.textContent = article.content;
 
-  const newAuthor = document.createElement("p");
+  const newAuthor = document.createElement('p');
   newAuthor.textContent = article.author;
 
-  const publishedDate = document.createElement("p");
+  const publishedDate = document.createElement('p');
   publishedDate.textContent = article.publishedAt;
 
-  const articleUrl = document.createElement("p");
+  const articleUrl = document.createElement('p');
   articleUrl.innerHTML = `<a href="${article.url}" target="_blank">Läs orginalartikeln</a>`;
 
-  const backBtn = document.createElement("button");
-  backBtn.textContent = "Gå tillbaka";
-  backBtn.classList.add("backButton");
+  const backBtn = document.createElement('button');
+  backBtn.textContent = 'Gå tillbaka';
+  backBtn.classList.add('backButton');
 
-  backBtn.addEventListener("click", () => {
+  backBtn.addEventListener('click', () => {
     renderHome();
   });
 
@@ -66,28 +97,27 @@ function renderArticleDetail(article) {
   );
 }
 
+function renderHome() {
+  renderArticles(articles);
+}
+
 let url =
-  "https://newsapi.org/v2/top-headlines?" +
-  "country=us&" +
-  "apiKey=7f05775074b64157aa2d6d6919e094af";
+  'https://newsapi.org/v2/top-headlines?' +
+  'country=us&' +
+  'apiKey=7f05775074b64157aa2d6d6919e094af';
 
 fetch(url)
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-
-    // Spara artiklarna i den globala variabeln
+    console.log('Fetched Data:', data);
     articles = data.articles;
-
-    localStorage.setItem("artiklar", JSON.stringify(data.articles));
-
-    // Rendera startsidan med artiklar
+    localStorage.setItem('artiklar', JSON.stringify(data.articles));
     renderHome();
   })
   .catch((error) => {
-    console.error(error);
+    console.error('Error:', error);
 
-    const newError = document.createElement("h2");
+    const newError = document.createElement('h2');
     newError.textContent = `Error: ${error}`;
     articleArea.append(newError);
   });
