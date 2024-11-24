@@ -46,7 +46,7 @@ function renderArticles(articlesToRender) {
     newDesc.textContent = element.description;
 
     const newBtn = document.createElement("button");
-    newBtn.textContent = "Läs mer";
+    newBtn.textContent = "Read More";
     newBtn.classList.add("readMoreBtn");
 
     newBtn.addEventListener("click", () => {
@@ -73,13 +73,13 @@ function renderArticleDetail(article) {
   newAuthor.textContent = article.author;
 
   const articleUrl = document.createElement("p");
-  articleUrl.innerHTML = `<a href="${article.url}" target="_blank">Läs orginalartikeln</a>`;
+  articleUrl.innerHTML = `<a href="${article.url}" target="_blank">Read the original article here</a>`;
 
   const publishedDate = document.createElement("i");
   publishedDate.textContent = article.publishedAt;
 
   const backBtn = document.createElement("button");
-  backBtn.textContent = "Gå tillbaka";
+  backBtn.textContent = "Go Back";
   backBtn.classList.add("backButton");
 
   backBtn.addEventListener("click", () => {
