@@ -1,55 +1,55 @@
-const articleArea = document.querySelector('.articleArea');
-const searchInput = document.querySelector('#searchArticlesInput');
+const articleArea = document.querySelector(".articleArea");
+const searchInput = document.querySelector("#searchArticlesInput");
 let articles = [];
 
-searchInput.addEventListener('keyup', () => {
-  console.log('Searching for:', searchInput.value);
+searchInput.addEventListener("keyup", () => {
+  console.log("Searching for:", searchInput.value);
   searchArticles(searchInput.value);
 });
 
 function searchArticles(query) {
-  if (query.trim() === '') {
+  if (query.trim() === "") {
     renderHome();
   } else {
     const filteredArticles = articles.filter((article) => {
       const searchText = query.toLowerCase();
-      const title = article.title ? article.title.toLowerCase() : '';
+      const title = article.title ? article.title.toLowerCase() : "";
       const description = article.description
         ? article.description.toLowerCase()
-        : '';
+        : "";
 
       return title.includes(searchText) || description.includes(searchText);
     });
 
-    console.log('Filtered Articles:', filteredArticles);
+    console.log("Filtered Articles:", filteredArticles);
 
     if (filteredArticles.length > 0) {
       renderArticles(filteredArticles);
     } else {
-      articleArea.innerHTML = '<h3>Inga artiklar hittades</h3>';
+      articleArea.innerHTML = "<h3>Inga artiklar hittades</h3>";
     }
   }
 }
 
 function renderArticles(articlesToRender) {
-  console.log('Rendering articles:', articlesToRender);
-  articleArea.innerHTML = '';
+  console.log("Rendering articles:", articlesToRender);
+  articleArea.innerHTML = "";
 
   articlesToRender.forEach((element) => {
-    const newTitle = document.createElement('h2');
+    const newTitle = document.createElement("h2");
     newTitle.textContent = element.title;
 
-    const newImg = document.createElement('img');
+    const newImg = document.createElement("img");
     newImg.src = element.urlToImage;
 
-    const newDesc = document.createElement('h3');
+    const newDesc = document.createElement("h3");
     newDesc.textContent = element.description;
 
-    const newBtn = document.createElement('button');
-    newBtn.textContent = 'Läs mer';
-    newBtn.classList.add('läsMerKnapp');
+    const newBtn = document.createElement("button");
+    newBtn.textContent = "Läs mer";
+    newBtn.classList.add("readMoreBtn");
 
-    newBtn.addEventListener('click', () => {
+    newBtn.addEventListener("click", () => {
       renderArticleDetail(element);
     });
 
@@ -58,31 +58,31 @@ function renderArticles(articlesToRender) {
 }
 
 function renderArticleDetail(article) {
-  articleArea.innerHTML = '';
+  articleArea.innerHTML = "";
 
-  const newTitle = document.createElement('h2');
+  const newTitle = document.createElement("h2");
   newTitle.textContent = article.title;
 
-  const newImg = document.createElement('img');
+  const newImg = document.createElement("img");
   newImg.src = article.urlToImage;
 
-  const newArticle = document.createElement('p');
+  const newArticle = document.createElement("p");
   newArticle.textContent = article.content;
 
-  const newAuthor = document.createElement('p');
+  const newAuthor = document.createElement("p");
   newAuthor.textContent = article.author;
 
-  const publishedDate = document.createElement('p');
-  publishedDate.textContent = article.publishedAt;
-
-  const articleUrl = document.createElement('p');
+  const articleUrl = document.createElement("p");
   articleUrl.innerHTML = `<a href="${article.url}" target="_blank">Läs orginalartikeln</a>`;
 
-  const backBtn = document.createElement('button');
-  backBtn.textContent = 'Gå tillbaka';
-  backBtn.classList.add('backButton');
+  const publishedDate = document.createElement("i");
+  publishedDate.textContent = article.publishedAt;
 
-  backBtn.addEventListener('click', () => {
+  const backBtn = document.createElement("button");
+  backBtn.textContent = "Gå tillbaka";
+  backBtn.classList.add("backButton");
+
+  backBtn.addEventListener("click", () => {
     renderHome();
   });
 
@@ -90,8 +90,8 @@ function renderArticleDetail(article) {
     newTitle,
     newImg,
     newAuthor,
-    publishedDate,
     newArticle,
+    publishedDate,
     articleUrl,
     backBtn
   );
@@ -109,22 +109,22 @@ function renderHome() {
 // business entertainment general health science sports technology
 
 // Här hämtar vi kategori från URL:en, exempelvis "health" från health.html
-const category = window.location.pathname.split('/').pop().split('.')[0]; // Hämta filnamnet utan ".html"
+const category = window.location.pathname.split("/").pop().split(".")[0]; // Hämta filnamnet utan ".html"
 
 fetch(
   `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
 )
   .then((response) => response.json())
   .then((data) => {
-    console.log('Fetched Data:', data);
+    console.log("Fetched Data:", data);
     articles = data.articles;
-    localStorage.setItem('artiklar', JSON.stringify(data.articles));
+    localStorage.setItem("artiklar", JSON.stringify(data.articles));
     renderHome();
   })
   .catch((error) => {
-    console.error('Error:', error);
+    console.error("Error:", error);
 
-    const newError = document.createElement('h2');
+    const newError = document.createElement("h2");
     newError.textContent = `Error: ${error}`;
     articleArea.append(newError);
   });
