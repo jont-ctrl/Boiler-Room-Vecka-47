@@ -3,15 +3,17 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  background-color: hsl(0, 0%, 98%);
 }
 img {
-  width: 100%;
+  width: 95%;
+  border-radius: 1rem;
 }
 
 .dropMenu button {
   color: #ffffff;
   font-size: 1rem;
-  background-color: #333;
+  background-color: hsl(0, 0%, 0%);
   border: solid #333;
 }
 .dropMenu a {
@@ -19,35 +21,92 @@ img {
   color: white;
   text-decoration: none;
   padding: 15px;
-  border-top: solid 1px;
+  /* border-top: solid 1px; */
 }
 
 .dropMenu .catagoryList {
-  background-color: #333;
+  background-color: hsl(0, 0%, 0%);
   position: absolute;
   padding: 10px 15px;
   display: none;
+  border-radius: 1rem;
 }
 
 .dropMenu:hover .catagoryList {
   display: block;
 }
 
+.catagoryList a:hover {
+  background-color: hsl(0, 0%, 25%);
+}
+
 .articleArea {
-  border: solid 6px #ffffff;
+  padding: 1rem;
+  padding-top: 2rem;
+  /* border: solid 6px #ffffff; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  justify-content: center;
+  align-items: start;
+
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* For one page article view */
+.articleArea.fullView {
+  display: flex;
+}
+
+.articleItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullArticleItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#authorArticle,
+#dateArticle {
+  color: hsl(0, 0%, 20%);
+  font-size: 0.9rem;
+}
+
+button {
+  cursor: pointer;
 }
 
 .readMoreBtn,
 .backButton {
-  margin: 0 0 30px 50%;
-  padding: 6px 12px 6px 12px;
-  background-color: #ffffff;
+  /*   margin: 0 0 30px 50%;
+  padding: 6px 12px 6px 12px; */
+  background-color: hsl(0, 0%, 10%);
+  color: white;
+  padding: 1rem 3rem;
   border: solid #333;
-  border-radius: 4px;
+  border-radius: 2rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  transition: transform 0.1s ease-in-out;
 }
 .readMoreBtn:hover,
 .backButton:hover {
-  background-color: #c1c0c0;
+  background-color: hsl(0, 0%, 20%);
+  transform: scale(1.05);
+}
+
+.readMoreBtn:active,
+.backButton:active {
+  background-color: hsl(0, 0%, 0%);
+  transform: scale(0.95);
 }
 
 a {
@@ -76,7 +135,8 @@ i {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: hsl(0, 0%, 0%);
+
   padding: 1rem 2rem;
   color: white;
 }
@@ -105,12 +165,19 @@ i {
   color: #bababa;
 }
 
+#searchArticlesInput {
+  border: 1px solid black;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+}
+
 /* Footer */
 footer {
-  background-color: #333;
+  background-color: hsl(0, 0%, 0%);
+  margin-top: 2rem;
   color: white;
   text-align: center;
-  padding: 1rem 0;
+  padding: 2rem;
 }
 
 footer .footer-links {
@@ -130,4 +197,34 @@ footer .footer-links li a {
 
 footer .footer-links li a:hover {
   color: #00bcd4;
+}
+
+.footer-content p {
+  color: white;
+}
+
+@media (max-width: 650px) {
+  .articleArea {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    margin-bottom: 1rem;
+  }
+  .dropMenu {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }

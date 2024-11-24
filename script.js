@@ -1,92 +1,115 @@
-const articleArea = document.querySelector(".articleArea");
-const searchInput = document.querySelector("#searchArticlesInput");
+const articleArea = document.querySelector('.articleArea');
+const searchInput = document.querySelector('#searchArticlesInput');
+
 let articles = [];
 
-searchInput.addEventListener("keyup", () => {
-  console.log("Searching for:", searchInput.value);
+// Search input field
+searchInput.addEventListener('keyup', () => {
+  console.log('Searching for:', searchInput.value);
   searchArticles(searchInput.value);
 });
 
 function searchArticles(query) {
-  if (query.trim() === "") {
+  if (query.trim() === '') {
     renderHome();
   } else {
     const filteredArticles = articles.filter((article) => {
       const searchText = query.toLowerCase();
-      const title = article.title ? article.title.toLowerCase() : "";
+      const title = article.title ? article.title.toLowerCase() : '';
       const description = article.description
         ? article.description.toLowerCase()
-        : "";
+        : '';
 
       return title.includes(searchText) || description.includes(searchText);
     });
 
-    console.log("Filtered Articles:", filteredArticles);
+    console.log('Filtered Articles:', filteredArticles);
 
     if (filteredArticles.length > 0) {
       renderArticles(filteredArticles);
     } else {
-      articleArea.innerHTML = "<h3>Inga artiklar hittades</h3>";
+      articleArea.innerHTML = '<h3>Inga artiklar hittades</h3>';
     }
   }
 }
 
 function renderArticles(articlesToRender) {
-  console.log("Rendering articles:", articlesToRender);
-  articleArea.innerHTML = "";
+  console.log('Rendering articles:', articlesToRender);
+  articleArea.innerHTML = '';
 
   articlesToRender.forEach((element) => {
-    const newTitle = document.createElement("h2");
-    newTitle.textContent = element.title;
+    // If statement to remove news that are deleted
+    if (element.author === null) {
+      //console.log('Article deleted:', element.author);
+    } else {
+      // Create div and append all articles elements
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('articleItem');
 
-    const newImg = document.createElement("img");
-    newImg.src = element.urlToImage;
+      const newTitle = document.createElement('h2');
+      newTitle.textContent = element.title;
 
-    const newDesc = document.createElement("h3");
-    newDesc.textContent = element.description;
+      const newImg = document.createElement('img');
+      newImg.src = element.urlToImage;
 
-    const newBtn = document.createElement("button");
-    newBtn.textContent = "Read More";
-    newBtn.classList.add("readMoreBtn");
+      const newDesc = document.createElement('p');
+      newDesc.textContent = element.description;
 
-    newBtn.addEventListener("click", () => {
-      renderArticleDetail(element);
-    });
+      const newBtn = document.createElement('button');
+      newBtn.textContent = 'Read More';
+      newBtn.classList.add('readMoreBtn');
 
-    articleArea.append(newTitle, newImg, newDesc, newBtn);
+      newBtn.addEventListener('click', () => {
+        renderArticleDetail(element);
+      });
+
+      articleArea.append(newDiv);
+      newDiv.append(newTitle, newImg, newDesc, newBtn);
+    }
   });
 }
 
 function renderArticleDetail(article) {
-  articleArea.innerHTML = "";
+  // Add 'fullView' class to the articleArea, for full width when viewing one article
+  articleArea.classList.add('fullView');
 
-  const newTitle = document.createElement("h2");
+  articleArea.innerHTML = '';
+
+  // Create div and append all articles elements
+  const newDivFull = document.createElement('div');
+  newDivFull.classList.add('fullArticleItem');
+
+  const newTitle = document.createElement('h2');
   newTitle.textContent = article.title;
 
-  const newImg = document.createElement("img");
+  const newImg = document.createElement('img');
   newImg.src = article.urlToImage;
 
-  const newArticle = document.createElement("p");
+  const newArticle = document.createElement('p');
   newArticle.textContent = article.content;
 
-  const newAuthor = document.createElement("h4");
-  newAuthor.textContent = article.author;
+  const newAuthor = document.createElement('p');
+  newAuthor.id = 'authorArticle';
+  newAuthor.textContent = 'By: ' + article.author;
 
-  const articleUrl = document.createElement("p");
+  const articleUrl = document.createElement('p');
   articleUrl.innerHTML = `<a href="${article.url}" target="_blank">Read the original article here</a>`;
 
-  const publishedDate = document.createElement("i");
-  publishedDate.textContent = article.publishedAt;
+  const publishedDate = document.createElement('i');
+  publishedDate.id = 'dateArticle';
+  publishedDate.textContent = 'Published: ' + article.publishedAt;
 
-  const backBtn = document.createElement("button");
-  backBtn.textContent = "Go Back";
-  backBtn.classList.add("backButton");
+  const backBtn = document.createElement('button');
+  backBtn.textContent = 'Go Back';
+  backBtn.classList.add('backButton');
 
-  backBtn.addEventListener("click", () => {
+  backBtn.addEventListener('click', () => {
     renderHome();
   });
 
-  articleArea.append(
+  articleArea.append(newDivFull);
+
+  newDivFull.append(
     newTitle,
     newImg,
     newAuthor,
@@ -98,26 +121,27 @@ function renderArticleDetail(article) {
 }
 
 function renderHome() {
+  articleArea.classList.remove('fullView');
   renderArticles(articles);
 }
 
 let url =
-  "https://newsapi.org/v2/top-headlines?" +
-  "country=us&" +
-  "apiKey=7f05775074b64157aa2d6d6919e094af";
+  'https://newsapi.org/v2/top-headlines?' +
+  'country=us&' +
+  'apiKey=7f05775074b64157aa2d6d6919e094af';
 
 fetch(url)
   .then((response) => response.json())
   .then((data) => {
-    console.log("Fetched Data:", data);
+    console.log('Fetched Data:', data);
     articles = data.articles;
-    localStorage.setItem("artiklar", JSON.stringify(data.articles));
+    localStorage.setItem('artiklar', JSON.stringify(data.articles));
     renderHome();
   })
   .catch((error) => {
-    console.error("Error:", error);
+    console.error('Error:', error);
 
-    const newError = document.createElement("h2");
+    const newError = document.createElement('h2');
     newError.textContent = `Error: ${error}`;
     articleArea.append(newError);
   });
