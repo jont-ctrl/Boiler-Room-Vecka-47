@@ -28,7 +28,7 @@ function searchArticles(query) {
     if (filteredArticles.length > 0) {
       renderArticles(filteredArticles);
     } else {
-      articleArea.innerHTML = '<h3>Inga artiklar hittades</h3>';
+      articleArea.innerHTML = '<h3>No articles found.</h3>';
     }
   }
 }
