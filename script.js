@@ -142,6 +142,6 @@ fetch(url)
     console.error('Error:', error);
 
     const newError = document.createElement('h2');
-    newError.textContent = `Error: ${error}`;
+    newError.textContent = `Sidan hittades inte, försök igen senare`;
     articleArea.append(newError);
   });
