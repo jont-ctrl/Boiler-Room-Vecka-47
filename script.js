@@ -133,37 +133,88 @@ if (category === 'index') {
     'country=us&' +
     'apiKey=7f05775074b64157aa2d6d6919e094af';
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
+  async function getTopNews() {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
       console.log('Fetched Data:', data);
       articles = data.articles;
       localStorage.setItem('artiklar', JSON.stringify(data.articles));
       renderHome();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-
+    } catch (error) {
+      console.error(error);
       const newError = document.createElement('h2');
       newError.textContent = `Sidan hittades inte, försök igen senare`;
       articleArea.append(newError);
-    });
+    }
+  }
+  getTopNews();
 } else {
-  fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
-  )
-    .then((response) => response.json())
-    .then((data) => {
+  async function getNewsCategory() {
+    try {
+      const response = await fetch(
+        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
+      );
+      const data = await response.json();
       console.log('Fetched Data:', data);
       articles = data.articles;
       localStorage.setItem('artiklar', JSON.stringify(data.articles));
       renderHome();
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Error:', error);
 
       const newError = document.createElement('h2');
       newError.textContent = `Sidan hittades inte, försök igen senare`;
       articleArea.append(newError);
-    });
+    }
+  }
+  getNewsCategory();
 }
+
+// fetch(url)
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log('Fetched Data:', data);
+//     articles = data.articles;
+//     localStorage.setItem('artiklar', JSON.stringify(data.articles));
+//     renderHome();
+//   })
+//   .catch((error) => {
+//     console.error('Error:', error);
+
+//     const newError = document.createElement('h2');
+//     newError.textContent = `Sidan hittades inte, försök igen senare`;
+//     articleArea.append(newError);
+
+// fetch(
+//   `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
+// )
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log('Fetched Data:', data);
+//     articles = data.articles;
+//     localStorage.setItem('artiklar', JSON.stringify(data.articles));
+//     renderHome();
+//   })
+//   .catch((error) => {
+//     console.error('Error:', error);
+
+//     const newError = document.createElement('h2');
+//     newError.textContent = `Sidan hittades inte, försök igen senare`;
+//     articleArea.append(newError);
+//   });
+
+//
+
+// // Promise 3 stadier alltid = pending, resolved, rejected
+// async function getCat() {
+//   try {
+//     const response = await fetch('https://do3gapi.dog/api/v2/breeds');
+//     const data = await response.json();
+//     console.log(data.data[0].attributes.name);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+// getCat();
