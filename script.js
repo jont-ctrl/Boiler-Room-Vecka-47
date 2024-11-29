@@ -1,5 +1,6 @@
 const articleArea = document.querySelector('.articleArea');
 const searchInput = document.querySelector('#searchArticlesInput');
+const catArea = document.querySelector('.catArea');
 
 let articles = [];
 
@@ -32,6 +33,48 @@ function searchArticles(query) {
     }
   }
 }
+
+let apiKey =
+  'live_MBYQSspEx30fGV0wezgfXkQJyISkrB8fzatBUBNsL1dSVwnkj0oWYmiOptDSP7Lv';
+
+async function fetchCatImage() {
+  console.log('hehejjej');
+
+  try {
+    console.log('hej');
+
+    let response = await fetch(
+      `https://api.thecatapi.com/v1/images/search?api_key=${apiKey}`
+    );
+    let data = await response.json();
+    let catImageUrl = data[0]?.url;
+
+    if (catImageUrl) {
+      let title = document.createElement('h2');
+      title.textContent = 'Cat of the day';
+
+      let catImage = document.createElement('img');
+      catImage.src = catImageUrl;
+      catImage.alt = 'A cute cat';
+      // catImage.style.width = '300px';
+
+      document.body.appendChild(title);
+      document.body.appendChild(catImage);
+
+      // const newCatDiv = document.createElement('div');
+      // newCatDiv.id = 'cat';
+      // main.append(newCatDiv);
+      catArea.append(title);
+      catArea.append(catImage);
+    } else {
+      console.error('Ingen bild hittades i API-svaret.');
+    }
+  } catch (error) {
+    console.error('Something went wrong while fetching the cat image.', error);
+  }
+}
+
+fetchCatImage();
 
 function renderArticles(articlesToRender) {
   console.log('Rendering articles:', articlesToRender);

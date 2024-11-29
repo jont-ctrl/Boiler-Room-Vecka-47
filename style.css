@@ -14,6 +14,24 @@ h2 {
   font-size: 1.75rem;
 }
 
+.catArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.catArea img {
+  width: 50%;
+}
+
+.lineBreak {
+  background-color: black;
+  margin: 2rem;
+  padding: 0.05rem;
+  border-radius: 1rem;
+}
+
 .dropMenu button {
   color: #ffffff;
   font-size: 1rem;
