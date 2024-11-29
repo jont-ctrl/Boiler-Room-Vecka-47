@@ -1,6 +1,7 @@
 const articleArea = document.querySelector('.articleArea');
 const searchInput = document.querySelector('#searchArticlesInput');
 const catArea = document.querySelector('.catArea');
+const weatherArea = document.querySelector('.weatherArea');
 
 let articles = [];
 
@@ -33,6 +34,8 @@ function searchArticles(query) {
     }
   }
 }
+
+// Cat Area
 
 let apiKey =
   'live_MBYQSspEx30fGV0wezgfXkQJyISkrB8fzatBUBNsL1dSVwnkj0oWYmiOptDSP7Lv';
@@ -75,6 +78,72 @@ async function fetchCatImage() {
 }
 
 fetchCatImage();
+
+// Weather area
+// Weather area
+
+// API Key and Base URL
+const API_KEY = '752a15f467b4f4a83ff17fe3bcd1816e';
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+
+// DOM Elements
+const cityInput = document.getElementById('cityInput');
+const getWeatherBtn = document.getElementById('getWeatherBtn');
+const weatherResult = document.getElementById('weatherResult');
+
+// Event Listener
+getWeatherBtn.addEventListener('click', fetchWeatherWithAsyncAwait);
+
+// Fetch Weather Using Async/Await
+async function fetchWeatherWithAsyncAwait() {
+  const city = cityInput.value.trim();
+
+  // Om inget stadnamn är angivet, använd Stockholm som default
+  const cityName = city === '' ? 'linköping' : city.toLowerCase();
+
+  const url = `${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`City not found (${response.status})`);
+    }
+    const data = await response.json();
+    displayWeather(data);
+  } catch (error) {
+    weatherResult.innerHTML = `<p class="error">${error.message}</p>`;
+  }
+}
+
+// Ladda vädret för Stockholm direkt när sidan laddas
+document.addEventListener('DOMContentLoaded', () => {
+  cityInput.value = ''; // Töm inputfältet om du vill, eller sätt Stockholm som default här
+  fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata för Stockholm
+});
+
+// Funktion för att visa väderdata (du kan skapa denna själv om den inte finns)
+function displayWeather(data) {
+  weatherResult.innerHTML = `
+    <p>Temperature in ${data.name}: ${data.main.temp}°C</p>
+    <p>Weather: ${data.weather[0].description}</p>
+    <p>Humidity: ${data.main.humidity}%</p>
+  `;
+}
+
+fetchWeatherWithAsyncAwait();
+
+// Display Weather Function
+function displayWeather(data) {
+  const { name, main, weather } = data;
+  weatherResult.innerHTML = `
+    <h2>${name}</h2>
+    <p><strong>Temperature:</strong> ${main.temp}°C</p>
+    <p><strong>Feels Like:</strong> ${main.feels_like}°C</p>
+    <p><strong>Humidity:</strong> ${main.humidity}%</p>
+    <p><strong>Weather:</strong> ${weather[0].description}</p>
+    <img src="https://openweathermap.org/img/wn/${weather[0].icon}@2x.png" alt="${weather[0].description}" id='weather'/>
+  `;
+}
 
 function renderArticles(articlesToRender) {
   console.log('Rendering articles:', articlesToRender);
