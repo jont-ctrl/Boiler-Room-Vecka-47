@@ -50,7 +50,13 @@ function renderArticles(articlesToRender) {
       newTitle.textContent = element.title;
 
       const newImg = document.createElement('img');
-      newImg.src = element.urlToImage;
+      // newImg.src = element.urlToImage;
+
+      if (element.urlToImage === null) {
+        newImg.src = 'images/default.jpg';
+      } else {
+        newImg.src = element.urlToImage;
+      }
 
       const newDesc = document.createElement('p');
       newDesc.textContent = element.description;
@@ -83,7 +89,15 @@ function renderArticleDetail(article) {
   newTitle.textContent = article.title;
 
   const newImg = document.createElement('img');
-  newImg.src = article.urlToImage;
+
+  if (article.urlToImage === null) {
+    newImg.src = 'images/default.jpg';
+  } else {
+    newImg.src = article.urlToImage;
+  }
+
+  // const newImg = document.createElement('img');
+  // newImg.src = article.urlToImage;
 
   const newArticle = document.createElement('p');
   newArticle.textContent = article.content;
