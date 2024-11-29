@@ -292,6 +292,8 @@ if (category === 'index') {
       const newError = document.createElement('h2');
       newError.textContent = `Sidan hittades inte, försök igen senare`;
       articleArea.append(newError);
+
+      // Ladda artiklar från localstorage
     }
   }
   getNewsCategory();
