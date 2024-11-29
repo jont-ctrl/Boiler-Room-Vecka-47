@@ -70,12 +70,10 @@ function renderArticles(articlesToRender) {
 }
 
 function renderArticleDetail(article) {
-  // Add 'fullView' class to the articleArea, for full width when viewing one article
   articleArea.classList.add('fullView');
 
   articleArea.innerHTML = '';
 
-  // Create div and append all articles elements
   const newDivFull = document.createElement('div');
   newDivFull.classList.add('fullArticleItem');
 
@@ -86,7 +84,7 @@ function renderArticleDetail(article) {
   newImg.src = article.urlToImage;
 
   const newArticle = document.createElement('p');
-  newArticle.textContent = article.content;
+  newArticle.textContent = article.content.replace(/\s\[\+(\d+)\schars\]$/, '');
 
   const newAuthor = document.createElement('p');
   newAuthor.id = 'authorArticle';
@@ -114,8 +112,8 @@ function renderArticleDetail(article) {
     newImg,
     newAuthor,
     newArticle,
-    publishedDate,
     articleUrl,
+    publishedDate,
     backBtn
   );
 }
