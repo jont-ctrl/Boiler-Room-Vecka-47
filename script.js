@@ -125,23 +125,45 @@ function renderHome() {
   renderArticles(articles);
 }
 
-let url =
-  'https://newsapi.org/v2/top-headlines?' +
-  'country=us&' +
-  'apiKey=7f05775074b64157aa2d6d6919e094af';
+const category = window.location.pathname.split('/').pop().split('.')[0];
 
-fetch(url)
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Fetched Data:', data);
-    articles = data.articles;
-    localStorage.setItem('artiklar', JSON.stringify(data.articles));
-    renderHome();
-  })
-  .catch((error) => {
-    console.error('Error:', error);
+if (category === 'index') {
+  let url =
+    'https://newsapi.org/v2/top-headlines?' +
+    'country=us&' +
+    'apiKey=7f05775074b64157aa2d6d6919e094af';
 
-    const newError = document.createElement('h2');
-    newError.textContent = `Sidan hittades inte, försök igen senare`;
-    articleArea.append(newError);
-  });
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Fetched Data:', data);
+      articles = data.articles;
+      localStorage.setItem('artiklar', JSON.stringify(data.articles));
+      renderHome();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+
+      const newError = document.createElement('h2');
+      newError.textContent = `Sidan hittades inte, försök igen senare`;
+      articleArea.append(newError);
+    });
+} else {
+  fetch(
+    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Fetched Data:', data);
+      articles = data.articles;
+      localStorage.setItem('artiklar', JSON.stringify(data.articles));
+      renderHome();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+
+      const newError = document.createElement('h2');
+      newError.textContent = `Sidan hittades inte, försök igen senare`;
+      articleArea.append(newError);
+    });
+}
