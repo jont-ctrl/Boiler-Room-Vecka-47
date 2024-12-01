@@ -56,7 +56,7 @@ async function fetchCatImage() {
       let title = document.createElement('h2');
       title.textContent = 'Cat of the day';
 
-      let catImage = document.createElement('img');
+      let catImage = document.getElementById('catImage');
       catImage.src = catImageUrl;
       catImage.alt = 'A cute cat';
       // catImage.style.width = '300px';
