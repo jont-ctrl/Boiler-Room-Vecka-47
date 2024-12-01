@@ -17,14 +17,28 @@ h2 {
 main {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
+}
 
+.top-area {
+  padding: 1rem;
+  padding-top: 2rem;
+  /* border: solid 6px #ffffff; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  justify-content: center;
+  align-items: start;
+
+  max-width: 1400px;
+  margin: auto;
 }
 
 .weather-app {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: center;
   margin: 1rem auto;
   padding: 1rem;
   max-width: 600px;
@@ -41,13 +55,13 @@ main {
 
 .weather-app input,
 .weather-app button {
+  text-align: center;
   margin-top: 0.5rem;
-  width: 80%; 
+  width: 80%;
   border-radius: 2rem;
   border: 1px solid #ccc;
   padding: 0.5rem;
   font-size: 1rem;
-  text-align: left;
 }
 
 .weather-app img {
@@ -64,19 +78,18 @@ main {
   text-align: left;
 }
 
-
 .weather-app input,
 .weather-app button {
   margin-top: 0.5rem;
-  width: 100%; 
-  align-self: right; 
+  width: 100%;
+  align-self: right;
   border-radius: 2rem;
   border: 1px solid #ccc;
 }
 
 .catArea {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center-top;
   align-items: left;
   margin: 1rem auto;
@@ -88,27 +101,25 @@ main {
 }
 
 .catArea img {
-  width: 400px; 
-  height: 400px; 
+  width: 400px;
+  height: 400px;
   object-fit: cover;
-  border-radius: 1rem; 
+  border-radius: 1rem;
 }
-
 
 .lineBreak {
   background-color: black;
-  height: 2px; 
-  width: 100%; 
+  height: 2px;
+  width: 100%;
   margin: 2rem 0;
-} */
-
-
+}
 .dropMenu button {
   color: #ffffff;
   font-size: 1rem;
   background-color: hsl(0, 0%, 0%);
   border: solid #333;
 }
+
 .dropMenu a {
   display: block;
   color: white;
@@ -320,5 +331,10 @@ footer .footer-links li a:hover {
   .dropMenu {
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+
+  .top-area {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
