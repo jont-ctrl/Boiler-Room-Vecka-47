@@ -3,6 +3,11 @@ const searchInput = document.querySelector('#searchArticlesInput');
 const catArea = document.querySelector('.catArea');
 const weatherArea = document.querySelector('.weatherArea');
 
+// DOM Elements weather
+const cityInput = document.getElementById('cityInput');
+const getWeatherBtn = document.getElementById('getWeatherBtn');
+const weatherResult = document.getElementById('weatherResult');
+
 let articles = [];
 
 // Search input field
@@ -74,18 +79,13 @@ async function fetchCatImage() {
   }
 }
 
-fetchCatImage();
+/* fetchCatImage(); */
 
 // Weather area
 
 // API Key and Base URL
 const API_KEY = '752a15f467b4f4a83ff17fe3bcd1816e';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
-
-// DOM Elements
-const cityInput = document.getElementById('cityInput');
-const getWeatherBtn = document.getElementById('getWeatherBtn');
-const weatherResult = document.getElementById('weatherResult');
 
 // Event Listener
 getWeatherBtn.addEventListener('click', fetchWeatherWithAsyncAwait);
@@ -117,16 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata för Stockholm
 });
 
-// Funktion för att visa väderdata (du kan skapa denna själv om den inte finns)
-/* function displayWeather(data) {
-  weatherResult.innerHTML = `
-    <p>Temperature in ${data.name}: ${data.main.temp}°C</p>
-    <p>Weather: ${data.weather[0].description}</p>
-    <p>Humidity: ${data.main.humidity}%</p>
-  `;
-} */
-
-fetchWeatherWithAsyncAwait();
+/* fetchWeatherWithAsyncAwait(); */
 
 // Display Weather Function
 function displayWeather(data) {
@@ -253,8 +244,10 @@ function renderHome() {
   renderArticles(articles);
 }
 
+// Hämta url keyword från url
 const category = window.location.pathname.split('/').pop().split('.')[0];
 
+/*
 if (category === 'index') {
   let url =
     'https://newsapi.org/v2/top-headlines?' +
@@ -298,5 +291,69 @@ if (category === 'index') {
       // Ladda artiklar från localstorage
     }
   }
-  getNewsCategory();
+
 }
+*/
+
+let url =
+  'https://newsapi.org/v2/top-headlines?' +
+  'country=us&' +
+  'apiKey=7f05775074b64157aa2d6d6919e094af';
+
+async function getTopNews() {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log('Fetched Data:', data);
+    articles = data.articles;
+    localStorage.setItem('artiklar', JSON.stringify(data.articles));
+    renderHome();
+  } catch (error) {
+    console.error(error);
+    const newError = document.createElement('h2');
+    newError.textContent = `Sidan hittades inte, försök igen senare`;
+    articleArea.append(newError);
+  }
+}
+
+async function getNewsCategory() {
+  try {
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
+    );
+    const data = await response.json();
+    console.log('Fetched Data:', data);
+    articles = data.articles;
+    localStorage.setItem('artiklar', JSON.stringify(data.articles));
+    renderHome();
+  } catch (error) {
+    console.error('Error:', error);
+
+    const newError = document.createElement('h2');
+    newError.textContent = `Sidan hittades inte, försök igen senare`;
+    articleArea.append(newError);
+
+    // Ladda artiklar från localstorage
+  }
+}
+
+console.log('hheohhej');
+
+async function init() {
+  console.log('hejhej');
+
+  const p1news = category === 'index' ? getTopNews() : getNewsCategory();
+  const p2cat = fetchCatImage();
+  const p3weather = fetchWeatherWithAsyncAwait();
+
+  // Vänta på att alla promises ska bli klara
+  const [result1, result2, result3] = await Promise.all([
+    p1news,
+    p2cat,
+    p3weather,
+  ]);
+
+  console.log(result1 + result2 + result3, 'hej');
+}
+
+init();
