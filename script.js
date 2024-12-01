@@ -247,54 +247,6 @@ function renderHome() {
 // Hämta url keyword från url
 const category = window.location.pathname.split('/').pop().split('.')[0];
 
-/*
-if (category === 'index') {
-  let url =
-    'https://newsapi.org/v2/top-headlines?' +
-    'country=us&' +
-    'apiKey=7f05775074b64157aa2d6d6919e094af';
-
-  async function getTopNews() {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log('Fetched Data:', data);
-      articles = data.articles;
-      localStorage.setItem('artiklar', JSON.stringify(data.articles));
-      renderHome();
-    } catch (error) {
-      console.error(error);
-      const newError = document.createElement('h2');
-      newError.textContent = `Sidan hittades inte, försök igen senare`;
-      articleArea.append(newError);
-    }
-  }
-  getTopNews();
-} else {
-  async function getNewsCategory() {
-    try {
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
-      );
-      const data = await response.json();
-      console.log('Fetched Data:', data);
-      articles = data.articles;
-      localStorage.setItem('artiklar', JSON.stringify(data.articles));
-      renderHome();
-    } catch (error) {
-      console.error('Error:', error);
-
-      const newError = document.createElement('h2');
-      newError.textContent = `Sidan hittades inte, försök igen senare`;
-      articleArea.append(newError);
-
-      // Ladda artiklar från localstorage
-    }
-  }
-
-}
-*/
-
 let url =
   'https://newsapi.org/v2/top-headlines?' +
   'country=us&' +
