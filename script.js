@@ -11,6 +11,7 @@ searchInput.addEventListener('keyup', () => {
   searchArticles(searchInput.value);
 });
 
+// Search articles
 function searchArticles(query) {
   if (query.trim() === '') {
     renderHome();
@@ -41,11 +42,7 @@ let apiKey =
   'live_MBYQSspEx30fGV0wezgfXkQJyISkrB8fzatBUBNsL1dSVwnkj0oWYmiOptDSP7Lv';
 
 async function fetchCatImage() {
-  console.log('hehejjej');
-
   try {
-    console.log('hej');
-
     let response = await fetch(
       `https://api.thecatapi.com/v1/images/search?api_key=${apiKey}`
     );
@@ -80,7 +77,6 @@ async function fetchCatImage() {
 fetchCatImage();
 
 // Weather area
-// Weather area
 
 // API Key and Base URL
 const API_KEY = '752a15f467b4f4a83ff17fe3bcd1816e';
@@ -98,7 +94,7 @@ getWeatherBtn.addEventListener('click', fetchWeatherWithAsyncAwait);
 async function fetchWeatherWithAsyncAwait() {
   const city = cityInput.value.trim();
 
-  // Om inget stadnamn är angivet, använd Stockholm som default
+  // Om inget stadnamn är angivet, använd Linköping som default
   const cityName = city === '' ? 'linköping' : city.toLowerCase();
 
   const url = `${BASE_URL}?q=${cityName}&appid=${API_KEY}&units=metric`;
@@ -115,7 +111,7 @@ async function fetchWeatherWithAsyncAwait() {
   }
 }
 
-// Ladda vädret för Stockholm direkt när sidan laddas
+// Ladda vädret för Linköping direkt när sidan laddas
 document.addEventListener('DOMContentLoaded', () => {
   cityInput.value = ''; // Töm inputfältet om du vill, eller sätt Stockholm som default här
   fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata för Stockholm
@@ -298,51 +294,3 @@ if (category === 'index') {
   }
   getNewsCategory();
 }
-
-// fetch(url)
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log('Fetched Data:', data);
-//     articles = data.articles;
-//     localStorage.setItem('artiklar', JSON.stringify(data.articles));
-//     renderHome();
-//   })
-//   .catch((error) => {
-//     console.error('Error:', error);
-
-//     const newError = document.createElement('h2');
-//     newError.textContent = `Sidan hittades inte, försök igen senare`;
-//     articleArea.append(newError);
-
-// fetch(
-//   `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=7f05775074b64157aa2d6d6919e094af`
-// )
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log('Fetched Data:', data);
-//     articles = data.articles;
-//     localStorage.setItem('artiklar', JSON.stringify(data.articles));
-//     renderHome();
-//   })
-//   .catch((error) => {
-//     console.error('Error:', error);
-
-//     const newError = document.createElement('h2');
-//     newError.textContent = `Sidan hittades inte, försök igen senare`;
-//     articleArea.append(newError);
-//   });
-
-//
-
-// // Promise 3 stadier alltid = pending, resolved, rejected
-// async function getCat() {
-//   try {
-//     const response = await fetch('https://do3gapi.dog/api/v2/breeds');
-//     const data = await response.json();
-//     console.log(data.data[0].attributes.name);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-// getCat();
