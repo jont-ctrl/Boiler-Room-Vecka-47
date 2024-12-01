@@ -118,18 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funktion för att visa väderdata (du kan skapa denna själv om den inte finns)
-function displayWeather(data) {
+/* function displayWeather(data) {
   weatherResult.innerHTML = `
     <p>Temperature in ${data.name}: ${data.main.temp}°C</p>
     <p>Weather: ${data.weather[0].description}</p>
     <p>Humidity: ${data.main.humidity}%</p>
   `;
-}
+} */
 
 fetchWeatherWithAsyncAwait();
 
 // Display Weather Function
 function displayWeather(data) {
+  weatherResult.innerHTML = `
+  <p>Temperature in ${data.name}: ${data.main.temp}°C</p>
+  <p>Weather: ${data.weather[0].description}</p>
+  <p>Humidity: ${data.main.humidity}%</p>
+`;
+
   const { name, main, weather } = data;
   weatherResult.innerHTML = `
     <h2>${name}</h2>
