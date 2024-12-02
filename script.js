@@ -66,9 +66,6 @@ async function fetchCatImage() {
       document.body.appendChild(title);
       document.body.appendChild(catImage);
 
-      // const newCatDiv = document.createElement('div');
-      // newCatDiv.id = 'cat';
-      // main.append(newCatDiv);
       catArea.append(title);
       catArea.append(catImage);
     } else {
