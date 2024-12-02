@@ -121,12 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Display Weather Function
 function displayWeather(data) {
-  weatherResult.innerHTML = `
-  <p>Temperature in ${data.name}: ${data.main.temp}°C</p>
-  <p>Weather: ${data.weather[0].description}</p>
-  <p>Humidity: ${data.main.humidity}%</p>
-`;
-
   const { name, main, weather } = data;
   weatherResult.innerHTML = `
     <h2>${name}</h2>
