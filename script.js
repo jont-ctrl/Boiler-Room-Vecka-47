@@ -133,7 +133,7 @@ function renderArticles(articlesToRender) {
 
   articlesToRender.forEach((element) => {
     // If statement to remove news that are deleted
-    if (element.author === null) {
+    if (element.author === null || element.content === null) {
       //console.log('Article deleted:', element.author);
     } else {
       // Create div and append all articles elements
@@ -189,9 +189,6 @@ function renderArticleDetail(article) {
   } else {
     newImg.src = article.urlToImage;
   }
-
-  // const newImg = document.createElement('img');
-  // newImg.src = article.urlToImage;
 
   // Remove text 'chars' at the end of text.
   const newArticle = document.createElement('p');
@@ -279,8 +276,6 @@ async function getNewsCategory() {
   }
 }
 
-console.log('hheohhej');
-
 async function init() {
   console.log('hejhej');
 
@@ -295,7 +290,7 @@ async function init() {
     p3weather,
   ]);
 
-  console.log(result1 + result2 + result3, 'hej');
+  console.log(result1, result2, result3, 'hej');
 }
 
 init();
