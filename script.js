@@ -79,10 +79,7 @@ async function fetchCatImage() {
   }
 }
 
-/* fetchCatImage(); */
-
 // Weather area
-
 // API Key and Base URL
 const API_KEY = '752a15f467b4f4a83ff17fe3bcd1816e';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
@@ -116,8 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
   cityInput.value = ''; // Töm inputfältet om du vill, eller sätt Stockholm som default här
   fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata för Stockholm
 });
-
-/* fetchWeatherWithAsyncAwait(); */
 
 // Display Weather Function
 function displayWeather(data) {
