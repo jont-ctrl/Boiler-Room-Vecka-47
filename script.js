@@ -193,8 +193,9 @@ function renderArticleDetail(article) {
   // const newImg = document.createElement('img');
   // newImg.src = article.urlToImage;
 
+  // Remove text 'chars' at the end of text.
   const newArticle = document.createElement('p');
-  newArticle.textContent = article.content;
+  newArticle.textContent = article.content.replace(/\s\[\+(\d+)\schars\]$/, '');
 
   const newAuthor = document.createElement('p');
   newAuthor.id = 'authorArticle';
