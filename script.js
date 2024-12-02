@@ -277,8 +277,6 @@ async function getNewsCategory() {
 }
 
 async function init() {
-  console.log('hejhej');
-
   const p1news = category === 'index' ? getTopNews() : getNewsCategory();
   const p2cat = fetchCatImage();
   const p3weather = fetchWeatherWithAsyncAwait();
@@ -289,8 +287,6 @@ async function init() {
     p2cat,
     p3weather,
   ]);
-
-  console.log(result1, result2, result3, 'hej');
 }
 
 init();
