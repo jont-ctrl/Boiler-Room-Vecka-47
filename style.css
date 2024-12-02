@@ -110,8 +110,9 @@ main {
 .lineBreak {
   background-color: black;
   height: 2px;
-  width: 100%;
-  margin: 2rem 0;
+  width: 75%;
+  margin: 2rem auto;
+  max-width: 1000px;
 }
 .dropMenu button {
   color: #ffffff;
