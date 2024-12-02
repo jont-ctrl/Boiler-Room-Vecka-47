@@ -110,8 +110,8 @@ async function fetchWeatherWithAsyncAwait() {
 
 // Ladda vädret för Linköping direkt när sidan laddas
 document.addEventListener('DOMContentLoaded', () => {
-  cityInput.value = ''; // Töm inputfältet om du vill, eller sätt Stockholm som default här
-  fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata för Stockholm
+  cityInput.value = '';
+  fetchWeatherWithAsyncAwait(); // Anropa funktionen för att hämta väderdata
 });
 
 // Display Weather Function
